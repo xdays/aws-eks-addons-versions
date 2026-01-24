@@ -288,6 +288,10 @@
             min-width: 120px;
         }
 
+        .version-cell-content {
+            position: relative;
+        }
+
         .version-badge {
             display: inline-block;
             font-family: 'Monaco', 'Consolas', monospace;
@@ -297,6 +301,43 @@
             padding: 3px 6px;
             border-radius: 3px;
             margin: 2px;
+        }
+
+        .version-badge.more-badge {
+            cursor: pointer;
+            background: #6c757d;
+            color: white;
+        }
+
+        .version-badge.more-badge:hover {
+            background: #5a6268;
+        }
+
+        .version-badge.hidden-version {
+            display: none;
+        }
+
+        .version-cell-content.expanded .version-badge.hidden-version {
+            display: inline-block;
+        }
+
+        .version-cell-content.expanded .version-badge.more-badge {
+            display: none;
+        }
+
+        .version-badge.less-badge {
+            display: none;
+            cursor: pointer;
+            background: #6c757d;
+            color: white;
+        }
+
+        .version-badge.less-badge:hover {
+            background: #5a6268;
+        }
+
+        .version-cell-content.expanded .version-badge.less-badge {
+            display: inline-block;
         }
 
         .version-badge.default {
@@ -462,14 +503,22 @@
                             {% for eks_version in eks_versions %}
                             <td class="version-cell">
                                 {% if eks_version in addon.versions_by_eks %}
+                                <div class="version-cell-content">
                                     {% for v in addon.versions_by_eks[eks_version][:3] %}
-                                <span class="version-badge{% if v.default %} default{% endif %}{% if v.requires_iam %} iam{% endif %}">
-                                    {{ v.version }}{% if v.requires_iam %}<span class="iam-indicator">IAM</span>{% endif %}
-                                </span>
+                                    <span class="version-badge{% if v.default %} default{% endif %}{% if v.requires_iam %} iam{% endif %}">
+                                        {{ v.version }}{% if v.requires_iam %}<span class="iam-indicator">IAM</span>{% endif %}
+                                    </span>
                                     {% endfor %}
                                     {% if addon.versions_by_eks[eks_version]|length > 3 %}
-                                <span class="version-badge">+{{ addon.versions_by_eks[eks_version]|length - 3 }} more</span>
+                                    {% for v in addon.versions_by_eks[eks_version][3:] %}
+                                    <span class="version-badge hidden-version{% if v.default %} default{% endif %}{% if v.requires_iam %} iam{% endif %}">
+                                        {{ v.version }}{% if v.requires_iam %}<span class="iam-indicator">IAM</span>{% endif %}
+                                    </span>
+                                    {% endfor %}
+                                    <span class="version-badge more-badge" onclick="toggleVersions(this)">+{{ addon.versions_by_eks[eks_version]|length - 3 }} more</span>
+                                    <span class="version-badge less-badge" onclick="toggleVersions(this)">show less</span>
                                     {% endif %}
+                                </div>
                                 {% else %}
                                 <span class="no-versions">-</span>
                                 {% endif %}
@@ -566,6 +615,12 @@
             // Initial count
             filterTable();
         });
+
+        // Toggle version expansion
+        function toggleVersions(element) {
+            const container = element.parentElement;
+            container.classList.toggle('expanded');
+        }
     </script>
 </body>
 </html>
