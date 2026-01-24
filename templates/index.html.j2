@@ -3,26 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AWS EKS Addon Versions Compatibility - Complete Version Matrix</title>
-
-    <!-- SEO Meta Tags -->
+    <title>AWS EKS Addon Versions - Complete Compatibility Matrix</title>
     <meta name="description" content="Complete compatibility matrix for AWS EKS addons. Find supported addon versions for each Kubernetes version including VPC CNI, CoreDNS, kube-proxy, EBS CSI, and more.">
     <meta name="keywords" content="AWS EKS, Kubernetes, EKS addons, addon versions, VPC CNI, CoreDNS, kube-proxy, EBS CSI driver, EFS CSI, compatibility matrix, Kubernetes versions">
     <meta name="author" content="xdays">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://aws-eks-addons-versions.pages.dev/">
+    <link rel="canonical" href="https://eav.ehtbyte.com/">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://aws-eks-addons-versions.pages.dev/">
-    <meta property="og:title" content="AWS EKS Addon Versions Compatibility Matrix">
+    <meta property="og:url" content="https://eav.ehtbyte.com/">
+    <meta property="og:title" content="AWS EKS Addon Versions - Complete Compatibility Matrix">
     <meta property="og:description" content="Complete compatibility matrix for AWS EKS addons. Find supported addon versions for each Kubernetes version.">
     <meta property="og:site_name" content="AWS EKS Addon Versions">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://aws-eks-addons-versions.pages.dev/">
-    <meta name="twitter:title" content="AWS EKS Addon Versions Compatibility Matrix">
+    <meta name="twitter:url" content="https://eav.ehtbyte.com/">
+    <meta name="twitter:title" content="AWS EKS Addon Versions - Complete Compatibility Matrix">
     <meta name="twitter:description" content="Complete compatibility matrix for AWS EKS addons. Find supported addon versions for each Kubernetes version.">
 
     <!-- Additional SEO -->
@@ -34,9 +32,9 @@
     {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "AWS EKS Addon Versions Compatibility",
+        "name": "AWS EKS Addon Versions",
         "description": "Complete compatibility matrix showing supported addon versions for each AWS EKS Kubernetes version",
-        "url": "https://aws-eks-addons-versions.pages.dev/",
+        "url": "https://eav.ehtbyte.com/",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Web",
         "offers": {
@@ -52,234 +50,130 @@
     </script>
 
     <style>
-        :root {
-            --bg-color: #f5f5f5;
-            --card-bg: #ffffff;
-            --text-color: #333333;
-            --border-color: #e0e0e0;
-            --header-bg: #232f3e;
-            --header-text: #ffffff;
-            --accent-color: #ff9900;
-            --success-color: #28a745;
-            --info-color: #17a2b8;
-            --warning-color: #ffc107;
-        }
-
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
         }
 
         header {
-            background-color: var(--header-bg);
-            color: var(--header-text);
-            padding: 1.5rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #232f3e 0%, #37475a 100%);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         header h1 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
+            margin: 0 0 5px 0;
+            font-size: 24px;
         }
 
         header p {
-            font-size: 0.875rem;
+            margin: 0;
             opacity: 0.8;
+            font-size: 14px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+
+        .json-link {
+            background: #ff9900;
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .json-link:hover {
+            background: #e88a00;
+        }
+
+        .header-search input {
+            padding: 10px 16px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            width: 280px;
+            outline: none;
+        }
+
+        .header-search input:focus {
+            box-shadow: 0 0 0 3px rgba(255, 153, 0, 0.4);
         }
 
         .controls {
-            background-color: var(--card-bg);
-            padding: 1rem 2rem;
-            border-bottom: 1px solid var(--border-color);
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             display: flex;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 10px;
             align-items: center;
-            position: sticky;
-            top: 85px;
-            z-index: 99;
-        }
-
-        .search-box {
-            flex: 1;
-            min-width: 200px;
-            max-width: 400px;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 0.875rem;
         }
 
         .filter-group {
             display: flex;
-            gap: 0.5rem;
+            gap: 8px;
             flex-wrap: wrap;
+            flex: 1;
         }
 
         .filter-btn {
-            padding: 0.4rem 0.8rem;
-            border: 1px solid var(--border-color);
-            background-color: var(--card-bg);
+            padding: 6px 12px;
+            border: 1px solid #e0e0e0;
+            background-color: white;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 12px;
             transition: all 0.2s;
         }
 
         .filter-btn:hover {
-            border-color: var(--accent-color);
+            border-color: #ff9900;
         }
 
         .filter-btn.active {
-            background-color: var(--accent-color);
-            border-color: var(--accent-color);
+            background-color: #ff9900;
+            border-color: #ff9900;
             color: white;
-        }
-
-        .container {
-            padding: 1rem 2rem 2rem;
-            overflow-x: auto;
-        }
-
-        .table-wrapper {
-            overflow-x: auto;
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.875rem;
-        }
-
-        th, td {
-            padding: 0.75rem 1rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        thead th {
-            background-color: var(--header-bg);
-            color: var(--header-text);
-            font-weight: 600;
-            position: sticky;
-            top: 0;
-            white-space: nowrap;
-        }
-
-        thead th:first-child {
-            position: sticky;
-            left: 0;
-            z-index: 2;
-        }
-
-        tbody tr:hover {
-            background-color: #f8f9fa;
-        }
-
-        tbody td:first-child {
-            position: sticky;
-            left: 0;
-            background-color: var(--card-bg);
-            font-weight: 500;
-            min-width: 200px;
-            z-index: 1;
-        }
-
-        tbody tr:hover td:first-child {
-            background-color: #f8f9fa;
-        }
-
-        .addon-name {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-
-        .addon-type {
-            font-size: 0.7rem;
-            color: #666;
-            text-transform: uppercase;
-        }
-
-        .version-cell {
-            min-width: 120px;
-        }
-
-        .version-badge {
-            display: inline-block;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            margin: 0.1rem;
-            background-color: #e9ecef;
-        }
-
-        .version-badge.default {
-            background-color: var(--success-color);
-            color: white;
-        }
-
-        .version-badge.iam {
-            border: 1px solid var(--info-color);
-        }
-
-        .iam-indicator {
-            font-size: 0.65rem;
-            color: var(--info-color);
-            margin-left: 0.25rem;
-        }
-
-        .no-versions {
-            color: #999;
-            font-style: italic;
-        }
-
-        .type-header {
-            background-color: #f0f0f0 !important;
-            font-weight: 600;
-        }
-
-        .type-header td {
-            background-color: #f0f0f0 !important;
-            color: #666;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 0.05em;
-        }
-
-        .hidden {
-            display: none !important;
         }
 
         .legend {
             display: flex;
-            gap: 1.5rem;
-            margin-left: auto;
-            font-size: 0.8rem;
+            gap: 15px;
+            font-size: 12px;
         }
 
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 0.25rem;
+            gap: 5px;
         }
 
         .legend-badge {
@@ -290,25 +184,212 @@
         }
 
         .legend-badge.default {
-            background-color: var(--success-color);
+            background-color: #28a745;
         }
 
         .legend-badge.iam {
             background-color: white;
-            border: 1px solid var(--info-color);
+            border: 1px solid #17a2b8;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .results-count {
+            padding: 10px 15px;
+            background: #f0f0f0;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .table-scroll {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        thead {
+            background: #232f3e;
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+
+        th {
+            padding: 12px 10px;
+            text-align: left;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        th:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 2;
+            background: #232f3e;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+        }
+
+        tbody td:first-child {
+            position: sticky;
+            left: 0;
+            background-color: white;
+            z-index: 1;
+            min-width: 200px;
+        }
+
+        tr:hover {
+            background: #fef9e7;
+        }
+
+        tr:hover td:first-child {
+            background: #fef9e7;
+        }
+
+        .addon-name {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .addon-name span:first-child {
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 13px;
+            color: #232f3e;
+            font-weight: 500;
+        }
+
+        .addon-type {
+            display: inline-block;
+            background: #ff9900;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            width: fit-content;
+        }
+
+        .version-cell {
+            min-width: 120px;
+        }
+
+        .version-badge {
+            display: inline-block;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 11px;
+            background: #e8f4fc;
+            color: #0073bb;
+            padding: 3px 6px;
+            border-radius: 3px;
+            margin: 2px;
+        }
+
+        .version-badge.default {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .version-badge.iam {
+            border: 1px solid #17a2b8;
+        }
+
+        .iam-indicator {
+            font-size: 9px;
+            color: #17a2b8;
+            margin-left: 3px;
+        }
+
+        .version-badge.default .iam-indicator {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .no-versions {
+            color: #999;
+            font-style: italic;
+        }
+
+        .type-header {
+            background-color: #f8f9fa !important;
+        }
+
+        .type-header td {
+            background-color: #f8f9fa !important;
+            color: #666;
+            text-transform: uppercase;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            padding: 8px 10px;
+        }
+
+        .hidden {
+            display: none !important;
         }
 
         footer {
             text-align: center;
-            padding: 2rem;
+            padding: 20px;
             color: #666;
-            font-size: 0.8rem;
+            font-size: 12px;
+        }
+
+        footer a {
+            color: #0073bb;
+        }
+
+        .clear-filters {
+            background: #ff9900;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        .clear-filters:hover {
+            background: #e88a00;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
         }
 
         @media (max-width: 768px) {
-            header, .controls, .container {
-                padding-left: 1rem;
-                padding-right: 1rem;
+            body {
+                padding: 10px;
+            }
+
+            header {
+                padding: 15px 20px;
+            }
+
+            .header-search input {
+                width: 200px;
             }
 
             .legend {
@@ -318,84 +399,95 @@
     </style>
 </head>
 <body>
-    <header>
-        <h1>AWS EKS Addon Versions Compatibility</h1>
-        <p>Shows compatible addon versions for each EKS Kubernetes version</p>
-    </header>
-
-    <div class="controls">
-        <div class="search-box">
-            <input type="text" id="search" placeholder="Search addons...">
-        </div>
-        <div class="filter-group">
-            <button class="filter-btn active" data-type="all">All</button>
-            {% for type in sorted_types %}
-            <button class="filter-btn" data-type="{{ type }}">{{ type }}</button>
-            {% endfor %}
-        </div>
-        <div class="legend">
-            <div class="legend-item">
-                <span class="legend-badge default"></span>
-                <span>Default version</span>
-            </div>
-            <div class="legend-item">
-                <span class="legend-badge iam"></span>
-                <span>Requires IAM</span>
-            </div>
-        </div>
-    </div>
-
     <div class="container">
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Addon</th>
-                        {% for version in eks_versions %}
-                        <th>{{ version }}</th>
-                        {% endfor %}
-                    </tr>
-                </thead>
-                <tbody id="addon-table">
-                    {% for type in sorted_types %}
-                    <tr class="type-header" data-type="{{ type }}">
-                        <td colspan="{{ eks_versions|length + 1 }}">{{ type }}</td>
-                    </tr>
-                    {% for addon in addons_by_type[type] %}
-                    <tr data-addon="{{ addon.name|lower }}" data-type="{{ addon.type or 'other' }}">
-                        <td>
-                            <div class="addon-name">
-                                <span>{{ addon.name }}</span>
-                                <span class="addon-type">{{ addon.type }}</span>
-                            </div>
-                        </td>
-                        {% for eks_version in eks_versions %}
-                        <td class="version-cell">
-                            {% if eks_version in addon.versions_by_eks %}
-                                {% for v in addon.versions_by_eks[eks_version][:3] %}
+        <header role="banner">
+            <div class="header-text">
+                <h1>AWS EKS Addon Versions</h1>
+                <p>Complete compatibility matrix showing supported addon versions for each Kubernetes version</p>
+            </div>
+            <div class="header-right">
+                <a href="addons_data.json" class="json-link" target="_blank" rel="noopener">JSON for API</a>
+                <div class="header-search">
+                    <label for="search" class="visually-hidden">Search addons</label>
+                    <input type="text" id="search" placeholder="Search addons..." aria-label="Search addons">
+                </div>
+            </div>
+        </header>
+
+        <div class="controls">
+            <div class="filter-group">
+                <button class="filter-btn active" data-type="all">All</button>
+                {% for type in sorted_types %}
+                <button class="filter-btn" data-type="{{ type }}">{{ type }}</button>
+                {% endfor %}
+            </div>
+            <div class="legend">
+                <div class="legend-item">
+                    <span class="legend-badge default"></span>
+                    <span>Default version</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-badge iam"></span>
+                    <span>Requires IAM</span>
+                </div>
+            </div>
+        </div>
+
+        <main role="main">
+        <div class="table-container">
+            <div id="resultsCount" class="results-count"></div>
+            <div class="table-scroll">
+                <table id="addonTable">
+                    <thead>
+                        <tr>
+                            <th>Addon</th>
+                            {% for version in eks_versions %}
+                            <th>{{ version }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody id="addon-table">
+                        {% for type in sorted_types %}
+                        <tr class="type-header" data-type="{{ type }}">
+                            <td colspan="{{ eks_versions|length + 1 }}">{{ type }}</td>
+                        </tr>
+                        {% for addon in addons_by_type[type] %}
+                        <tr data-addon="{{ addon.name|lower }}" data-type="{{ addon.type or 'other' }}">
+                            <td>
+                                <div class="addon-name">
+                                    <span>{{ addon.name }}</span>
+                                    <span class="addon-type">{{ addon.type }}</span>
+                                </div>
+                            </td>
+                            {% for eks_version in eks_versions %}
+                            <td class="version-cell">
+                                {% if eks_version in addon.versions_by_eks %}
+                                    {% for v in addon.versions_by_eks[eks_version][:3] %}
                                 <span class="version-badge{% if v.default %} default{% endif %}{% if v.requires_iam %} iam{% endif %}">
                                     {{ v.version }}{% if v.requires_iam %}<span class="iam-indicator">IAM</span>{% endif %}
                                 </span>
-                                {% endfor %}
-                                {% if addon.versions_by_eks[eks_version]|length > 3 %}
+                                    {% endfor %}
+                                    {% if addon.versions_by_eks[eks_version]|length > 3 %}
                                 <span class="version-badge">+{{ addon.versions_by_eks[eks_version]|length - 3 }} more</span>
+                                    {% endif %}
+                                {% else %}
+                                <span class="no-versions">-</span>
                                 {% endif %}
-                            {% else %}
-                            <span class="no-versions">-</span>
-                            {% endif %}
-                        </td>
+                            </td>
+                            {% endfor %}
+                        </tr>
                         {% endfor %}
-                    </tr>
-                    {% endfor %}
-                    {% endfor %}
-                </tbody>
-            </table>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
+        </main>
 
-    <footer>
-        Generated on {{ generated_at }} | Data from AWS EKS API
-    </footer>
+        <footer role="contentinfo">
+            Generated on {{ generated_at }} | Data from <a href="https://docs.aws.amazon.com/eks/latest/userguide/eks-add-ons.html" target="_blank" rel="noopener noreferrer">AWS EKS API</a>
+        </footer>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -403,14 +495,32 @@
             const filterBtns = document.querySelectorAll('.filter-btn');
             const rows = document.querySelectorAll('#addon-table tr:not(.type-header)');
             const typeHeaders = document.querySelectorAll('.type-header');
+            const resultsCount = document.getElementById('resultsCount');
 
             let activeType = 'all';
+            const totalAddons = rows.length;
+
+            function updateResultsCount(visibleCount) {
+                const hasFilters = searchInput.value || activeType !== 'all';
+                let html = `Showing ${visibleCount} of ${totalAddons} addons`;
+                if (hasFilters) {
+                    html += `<button class="clear-filters" onclick="clearAllFilters()">Clear Filters</button>`;
+                }
+                resultsCount.innerHTML = html;
+            }
+
+            window.clearAllFilters = function() {
+                searchInput.value = '';
+                activeType = 'all';
+                filterBtns.forEach(b => b.classList.remove('active'));
+                document.querySelector('[data-type="all"]').classList.add('active');
+                filterTable();
+            };
 
             function filterTable() {
                 const searchTerm = searchInput.value.toLowerCase();
-
-                // Track which types have visible addons
                 const visibleTypes = new Set();
+                let visibleCount = 0;
 
                 rows.forEach(row => {
                     const addonName = row.dataset.addon;
@@ -422,12 +532,12 @@
                     if (matchesSearch && matchesType) {
                         row.classList.remove('hidden');
                         visibleTypes.add(addonType);
+                        visibleCount++;
                     } else {
                         row.classList.add('hidden');
                     }
                 });
 
-                // Show/hide type headers based on visible addons
                 typeHeaders.forEach(header => {
                     const type = header.dataset.type;
                     if (activeType === 'all' && visibleTypes.has(type)) {
@@ -438,6 +548,8 @@
                         header.classList.add('hidden');
                     }
                 });
+
+                updateResultsCount(visibleCount);
             }
 
             searchInput.addEventListener('input', filterTable);
@@ -450,6 +562,9 @@
                     filterTable();
                 });
             });
+
+            // Initial count
+            filterTable();
         });
     </script>
 </body>
