@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS EKS Addon Versions Compatibility - Complete Version Matrix</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Complete compatibility matrix for AWS EKS addons. Find supported addon versions for each Kubernetes version including VPC CNI, CoreDNS, kube-proxy, EBS CSI, and more.">
+    <meta name="keywords" content="AWS EKS, Kubernetes, EKS addons, addon versions, VPC CNI, CoreDNS, kube-proxy, EBS CSI driver, EFS CSI, compatibility matrix, Kubernetes versions">
+    <meta name="author" content="xdays">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://aws-eks-addons-versions.pages.dev/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aws-eks-addons-versions.pages.dev/">
+    <meta property="og:title" content="AWS EKS Addon Versions Compatibility Matrix">
+    <meta property="og:description" content="Complete compatibility matrix for AWS EKS addons. Find supported addon versions for each Kubernetes version.">
+    <meta property="og:site_name" content="AWS EKS Addon Versions">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://aws-eks-addons-versions.pages.dev/">
+    <meta name="twitter:title" content="AWS EKS Addon Versions Compatibility Matrix">
+    <meta name="twitter:description" content="Complete compatibility matrix for AWS EKS addons. Find supported addon versions for each Kubernetes version.">
+
+    <!-- Additional SEO -->
+    <meta name="theme-color" content="#232f3e">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "AWS EKS Addon Versions Compatibility",
+        "description": "Complete compatibility matrix showing supported addon versions for each AWS EKS Kubernetes version",
+        "url": "https://aws-eks-addons-versions.pages.dev/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "xdays"
+        }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #f5f5f5;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #e0e0e0;
+            --header-bg: #232f3e;
+            --header-text: #ffffff;
+            --accent-color: #ff9900;
+            --success-color: #28a745;
+            --info-color: #17a2b8;
+            --warning-color: #ffc107;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        .controls {
+            background-color: var(--card-bg);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            position: sticky;
+            top: 85px;
+            z-index: 99;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            max-width: 400px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 0.875rem;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.4rem 0.8rem;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--accent-color);
+        }
+
+        .filter-btn.active {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: white;
+        }
+
+        .container {
+            padding: 1rem 2rem 2rem;
+            overflow-x: auto;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        thead th {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            white-space: nowrap;
+        }
+
+        thead th:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 2;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        tbody td:first-child {
+            position: sticky;
+            left: 0;
+            background-color: var(--card-bg);
+            font-weight: 500;
+            min-width: 200px;
+            z-index: 1;
+        }
+
+        tbody tr:hover td:first-child {
+            background-color: #f8f9fa;
+        }
+
+        .addon-name {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .addon-type {
+            font-size: 0.7rem;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        .version-cell {
+            min-width: 120px;
+        }
+
+        .version-badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin: 0.1rem;
+            background-color: #e9ecef;
+        }
+
+        .version-badge.default {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .version-badge.iam {
+            border: 1px solid var(--info-color);
+        }
+
+        .iam-indicator {
+            font-size: 0.65rem;
+            color: var(--info-color);
+            margin-left: 0.25rem;
+        }
+
+        .no-versions {
+            color: #999;
+            font-style: italic;
+        }
+
+        .type-header {
+            background-color: #f0f0f0 !important;
+            font-weight: 600;
+        }
+
+        .type-header td {
+            background-color: #f0f0f0 !important;
+            color: #666;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .legend {
+            display: flex;
+            gap: 1.5rem;
+            margin-left: auto;
+            font-size: 0.8rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .legend-badge {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+
+        .legend-badge.default {
+            background-color: var(--success-color);
+        }
+
+        .legend-badge.iam {
+            background-color: white;
+            border: 1px solid var(--info-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            header, .controls, .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .legend {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>AWS EKS Addon Versions Compatibility</h1>
+        <p>Shows compatible addon versions for each EKS Kubernetes version</p>
+    </header>
+
+    <div class="controls">
+        <div class="search-box">
+            <input type="text" id="search" placeholder="Search addons...">
+        </div>
+        <div class="filter-group">
+            <button class="filter-btn active" data-type="all">All</button>
+            {% for type in sorted_types %}
+            <button class="filter-btn" data-type="{{ type }}">{{ type }}</button>
+            {% endfor %}
+        </div>
+        <div class="legend">
+            <div class="legend-item">
+                <span class="legend-badge default"></span>
+                <span>Default version</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-badge iam"></span>
+                <span>Requires IAM</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Addon</th>
+                        {% for version in eks_versions %}
+                        <th>{{ version }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody id="addon-table">
+                    {% for type in sorted_types %}
+                    <tr class="type-header" data-type="{{ type }}">
+                        <td colspan="{{ eks_versions|length + 1 }}">{{ type }}</td>
+                    </tr>
+                    {% for addon in addons_by_type[type] %}
+                    <tr data-addon="{{ addon.name|lower }}" data-type="{{ addon.type or 'other' }}">
+                        <td>
+                            <div class="addon-name">
+                                <span>{{ addon.name }}</span>
+                                <span class="addon-type">{{ addon.type }}</span>
+                            </div>
+                        </td>
+                        {% for eks_version in eks_versions %}
+                        <td class="version-cell">
+                            {% if eks_version in addon.versions_by_eks %}
+                                {% for v in addon.versions_by_eks[eks_version][:3] %}
+                                <span class="version-badge{% if v.default %} default{% endif %}{% if v.requires_iam %} iam{% endif %}">
+                                    {{ v.version }}{% if v.requires_iam %}<span class="iam-indicator">IAM</span>{% endif %}
+                                </span>
+                                {% endfor %}
+                                {% if addon.versions_by_eks[eks_version]|length > 3 %}
+                                <span class="version-badge">+{{ addon.versions_by_eks[eks_version]|length - 3 }} more</span>
+                                {% endif %}
+                            {% else %}
+                            <span class="no-versions">-</span>
+                            {% endif %}
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        Generated on {{ generated_at }} | Data from AWS EKS API
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('search');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const rows = document.querySelectorAll('#addon-table tr:not(.type-header)');
+            const typeHeaders = document.querySelectorAll('.type-header');
+
+            let activeType = 'all';
+
+            function filterTable() {
+                const searchTerm = searchInput.value.toLowerCase();
+
+                // Track which types have visible addons
+                const visibleTypes = new Set();
+
+                rows.forEach(row => {
+                    const addonName = row.dataset.addon;
+                    const addonType = row.dataset.type;
+
+                    const matchesSearch = addonName.includes(searchTerm);
+                    const matchesType = activeType === 'all' || addonType === activeType;
+
+                    if (matchesSearch && matchesType) {
+                        row.classList.remove('hidden');
+                        visibleTypes.add(addonType);
+                    } else {
+                        row.classList.add('hidden');
+                    }
+                });
+
+                // Show/hide type headers based on visible addons
+                typeHeaders.forEach(header => {
+                    const type = header.dataset.type;
+                    if (activeType === 'all' && visibleTypes.has(type)) {
+                        header.classList.remove('hidden');
+                    } else if (activeType === type && visibleTypes.has(type)) {
+                        header.classList.remove('hidden');
+                    } else {
+                        header.classList.add('hidden');
+                    }
+                });
+            }
+
+            searchInput.addEventListener('input', filterTable);
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    activeType = this.dataset.type;
+                    filterTable();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
