@@ -196,7 +196,7 @@
             background: white;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            overflow: hidden;
+            overflow: clip;
         }
 
         .results-count {
@@ -621,6 +621,65 @@
             const container = element.parentElement;
             container.classList.toggle('expanded');
         }
+
+        // Sticky thead pin ------------------------------------------------
+        (function () {
+            const table       = document.getElementById('addonTable');
+            const tableScroll = table.closest('.table-scroll');
+            const thead       = table.querySelector('thead');
+
+            // Build a fixed clone of the thead
+            const clone = document.createElement('div');
+            clone.style.cssText = [
+                'position:fixed', 'top:0', 'z-index:1000',
+                'overflow:hidden', 'display:none',
+                'background:#232f3e', 'color:white',
+                'box-shadow:0 2px 6px rgba(0,0,0,0.35)'
+            ].join(';');
+
+            const cloneTable = document.createElement('table');
+            cloneTable.style.cssText = 'border-collapse:collapse;font-size:14px;table-layout:fixed;';
+            cloneTable.appendChild(thead.cloneNode(true));
+            clone.appendChild(cloneTable);
+            document.body.appendChild(clone);
+
+            function sync() {
+                const rect = tableScroll.getBoundingClientRect();
+                clone.style.left  = rect.left  + 'px';
+                clone.style.width = rect.width + 'px';
+
+                const srcThs   = thead.querySelectorAll('th');
+                const cloneThs = cloneTable.querySelectorAll('th');
+                let total = 0;
+                srcThs.forEach((th, i) => {
+                    const w = th.offsetWidth;
+                    cloneThs[i].style.width    = w + 'px';
+                    cloneThs[i].style.minWidth = w + 'px';
+                    total += w;
+                });
+                cloneTable.style.width = total + 'px';
+                clone.scrollLeft = tableScroll.scrollLeft;
+            }
+
+            window.addEventListener('scroll', () => {
+                if (thead.getBoundingClientRect().bottom <= 0) {
+                    clone.style.display = 'block';
+                    sync();
+                } else {
+                    clone.style.display = 'none';
+                }
+            }, { passive: true });
+
+            tableScroll.addEventListener('scroll', () => {
+                if (clone.style.display !== 'none') {
+                    clone.scrollLeft = tableScroll.scrollLeft;
+                }
+            }, { passive: true });
+
+            window.addEventListener('resize', () => {
+                if (clone.style.display !== 'none') sync();
+            });
+        })();
     </script>
 </body>
 </html>
